@@ -1,0 +1,101 @@
+---
+title: "NHANES Pulse Prediction: Exploratory Analysis and Regression Modeling"
+author: "Atabek Rysbekov"
+output:
+  html_document:
+    toc: true
+    toc_depth: 3
+    toc_float: true
+    number_sections: false
+    code_folding: show
+    df_print: paged
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE,
+  warning = FALSE,
+  message = FALSE,
+  fig.width = 7,
+  fig.height = 4.5
+)
+```
+
+The goal of this project is to predict an individual's Pulse using the NHANES
+training data. This notebook documents the analysis of demographic, health, and lifestyle
+variables associated with resting pulse rate.
+
+## 1. Load the training data
+
+The training data are stored in the repository `data/` directory.
+```{r}
+nhanes <- read.csv("data/NHANES-training.csv")
+```
+
+Check the number of rows and columns in the imported data:
+
+```{r}
+dim(nhanes)
+```
+
+## 2. Checking Variables
+
+I first checked candidate predictors for missingness and variability, then examined their relationships with Pulse. The initial summaries below document screening before the exclusions.
+
+```{r}
+variables <- c(
+  "Pulse",
+  "Gender", "Age", "Race1", "Education", "MaritalStatus",
+  "HHIncome", "Poverty", "Work",
+  "BMI", "BPSysAve", "BPDiaAve", "Testosterone", "DirectChol", "TotChol",
+  "Diabetes", "HealthGen", "DaysPhysHlthBad", "DaysMentHlthBad",
+  "SleepHrsNight", "SleepTrouble",
+  "PhysActive", "PhysActiveDays", "TVHrsDay", "CompHrsDay",
+  "Alcohol12PlusYr", "AlcoholDay", "AlcoholYear", "Smoke100", "SmokeNow"
+)
+```
+
+Check the percentage of missing values.
+```{r}
+round(colMeans(is.na(nhanes[variables])) * 100, 1)
+```
+
+
+Check the numerical variables for their ranges, unusual values, and variability.
+```{r}
+numerical <- c(
+  "Pulse", "Age", "Poverty", "BMI", "BPSysAve", "BPDiaAve",
+  "Testosterone", "DirectChol", "TotChol", "DaysPhysHlthBad",
+  "DaysMentHlthBad", "SleepHrsNight", "PhysActiveDays",
+  "AlcoholDay", "AlcoholYear"
+)
+
+summary(nhanes[numerical])
+```
+
+I excluded PhysActiveDays and AlcoholDay from the initial predictor list because they were missing 52.7% and 33.3% of their values, respectively. I retained PhysActive as a more complete measure of physical activity. I considered Alcohol12PlusYr and AlcoholYear as alternative alcohol measures. Rather than exclude smoking information, I combined Smoke100 and SmokeNow.
+
+```{r}
+nhanes$SmokeStatus <- ifelse(
+  nhanes$Smoke100 == "No", "Under100",
+  ifelse(nhanes$SmokeNow == "Yes", "Current", "Former")
+)
+
+table(nhanes$SmokeStatus)
+```
+Here, Under100 means fewer than 100 lifetime cigarettes. Current and Former refer to participants who reported smoking at least 100 lifetime cigarettes.
+
+SmokeStatus replaces the two original smoking variables in subsequent EDA.
+
+
+
+Count observations in each category of the categorical variables.
+```{r}
+categorical <- c(
+  "Gender", "Race1", "Education", "MaritalStatus", "HHIncome",
+  "Work", "Diabetes", "HealthGen", "SleepTrouble", "PhysActive",
+  "TVHrsDay", "CompHrsDay", "Alcohol12PlusYr", "SmokeStatus"
+)
+
+lapply(nhanes[categorical], table, useNA = "ifany")
+```
