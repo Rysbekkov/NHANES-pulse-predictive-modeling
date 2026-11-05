@@ -99,3 +99,140 @@ categorical <- c(
 
 lapply(nhanes[categorical], table, useNA = "ifany")
 ```
+
+## 3. Distribution of Pulse
+
+```{r}
+library(mosaic)
+library(ggformula)
+
+favstats(~Pulse, data = nhanes)
+
+gf_histogram(~Pulse, data = nhanes, bins = 30)
+```
+
+Pulse is unimodal and slightly right-skewed. The mean is 72.62 beats per minute and the median is 72. The middle 50% of values lie between 64 and 80, with a full range of 40 to 136. The value of 136 is separated from the main cluster. It was retained because the available information does not establish a recording error; unusual values require separate review. There are 47 missing Pulse values.
+
+## 4. Distributions of Numerical Predictors
+
+PhysActiveDays and AlcoholDay were excluded during the initial missingness screening. The retained numerical predictors are:
+
+```{r}
+numerical <- c(
+  "Age", "Poverty", "BMI", "BPSysAve", "BPDiaAve",
+  "Testosterone", "DirectChol", "TotChol", "DaysPhysHlthBad",
+  "DaysMentHlthBad", "SleepHrsNight", "AlcoholYear"
+)
+```
+
+### Age
+
+```{r}
+favstats(~Age, data = nhanes)
+gf_histogram(~Age, data = nhanes, bins = 30)
+```
+
+Recorded Age is broadly distributed across adulthood rather than bell-shaped. The mean of the recorded values is 47.40 years and the median is 47. The middle 50% lie between 33 and 61, with a recorded range of 20 to 80. The 87 observations coded as 80 represent participants aged 80 or older, consistent with the reported age coding.
+
+### Poverty
+
+```{r}
+favstats(~Poverty, data = nhanes)
+gf_histogram(~Poverty, data = nhanes, bins = 30)
+```
+
+Poverty has an irregular distribution with a large spike at 5. The mean is 2.89 and the median is 2.86. The middle 50% of values lie between 1.33 and 4.89, with a full range of 0 to 5. The 400 observations equal to 5 represent ratios of 5 or higher. This concentration reflects a reporting limit.
+
+### BMI
+
+```{r}
+favstats(~BMI, data = nhanes)
+gf_histogram(~BMI, data = nhanes, bins = 30)
+```
+
+BMI is unimodal and right-skewed. The mean is 28.71 and the median is 27.70. The middle 50% of values lie between 23.90 and 32.20, with a full range of 15.70 to 69.00. Values such as 59.20, 62.80, and 69.00 are far above the main cluster. I retained them because the available information does not establish recording errors; their influence can be examined during model evaluation.
+
+### Average systolic blood pressure
+
+```{r}
+favstats(~BPSysAve, data = nhanes)
+gf_histogram(~BPSysAve, data = nhanes, bins = 30)
+```
+
+Average systolic blood pressure is unimodal and right-skewed. The mean is 121.28 mm Hg and the median is 119. The middle 50% of readings lie between 110 and 130, with a full range of 81 to 221. Readings around 202 and the maximum of 221 are unusually high compared with the main cluster. I retained them, with their possible influence noted for model evaluation.
+
+### Average diastolic blood pressure
+
+```{r}
+favstats(~BPDiaAve, data = nhanes)
+gf_histogram(~BPDiaAve, data = nhanes, bins = 30)
+```
+
+Most average diastolic blood pressure readings form a roughly symmetric, unimodal cluster around 72 mm Hg, but low readings create a longer left tail. The mean is 71.34 mm Hg and the median is 72. The middle 50% lie between 65 and 78, with a full range of 0 to 107. Five observations equal 0. I examined their recorded readings and retained the supplied averages, for further examination.
+
+### Testosterone
+
+```{r}
+favstats(~Testosterone, data = nhanes)
+gf_histogram(~Testosterone, data = nhanes, bins = 30)
+```
+
+Testosterone has a large concentration of low values and a broader second concentration at several hundred ng/dL, with a long right tail. The mean is 217.83 ng/dL and the median is approximately 91.73. The middle 50% of values lie between 19.89 and 378.33, with a full range of 1.79 to 1795.60. The largest readings, especially 1795.60, were flagged and retained, for further examination. Gender-specific distributions may explain the two concentrations.
+
+### HDL cholesterol
+
+```{r}
+favstats(~DirectChol, data = nhanes)
+gf_histogram(~DirectChol, data = nhanes, bins = 30)
+```
+
+HDL cholesterol is unimodal and right-skewed. The mean is 1.36 mmol/L and the median is 1.29. The middle 50% of readings lie between 1.09 and 1.58, with a full range of 0.47 to 3.83. Readings around 3.59 and the maximum of 3.83 are unusually high compared with most observations. They were flagged and retained, for further examination.
+
+### Total cholesterol
+
+```{r}
+favstats(~TotChol, data = nhanes)
+gf_histogram(~TotChol, data = nhanes, bins = 30)
+```
+
+Total cholesterol is unimodal and slightly right-skewed, with a few high readings extending the right tail. The mean is 5.01 mmol/L and the median is 4.91. The middle 50% of readings lie between 4.27 and 5.66, with a full range of 2.17 to 12.28. Readings of 10.29 and 12.28 are far above the main cluster. They were flagged and retained, for further examination.
+
+### Days of poor physical health
+
+```{r}
+favstats(~DaysPhysHlthBad, data = nhanes)
+gf_histogram(~DaysPhysHlthBad, data = nhanes, bins = 30)
+```
+
+Days of poor physical health is strongly right-skewed, with most participants reporting 0 days and a smaller spike at 30 days. The mean is 3.39 days and the median is 0. The middle 50% of values lie between 0 and 2, with a full range of 0 to 30. Although 30 days is far from the main concentration, it falls within the question's reporting period and should not automatically be treated as an error.
+
+### Days of poor mental health
+
+```{r}
+favstats(~DaysMentHlthBad, data = nhanes)
+gf_histogram(~DaysMentHlthBad, data = nhanes, bins = 30)
+```
+
+Days of poor mental health is strongly right-skewed, with most participants reporting 0 days and a smaller spike at 30 days. The mean is 3.95 days and the median is 0. The middle 50% of values lie between 0 and 4, with a full range of 0 to 30. Reports of 30 days are relatively high but fall within the reporting period, so they should not automatically be removed.
+
+### Hours of sleep per night
+
+```{r}
+favstats(~SleepHrsNight, data = nhanes)
+gf_histogram(~SleepHrsNight, data = nhanes, bins = 30)
+```
+
+Hours of sleep has a roughly symmetric overall distribution concentrated at 6, 7, and 8 hours, with 8 hours the most frequent response. The mean is 6.88 hours and the median is 7. The middle 50% of values lie between 6 and 8, with a full range of 2 to 12. Reports of 2 and 12 hours are unusual compared with the main cluster. They were flagged and retained, for further examination.
+
+### Drinking days per year
+
+```{r}
+favstats(~AlcoholYear, data = nhanes)
+gf_histogram(~AlcoholYear, data = nhanes, bins = 30)
+```
+
+Drinking days per year is strongly right-skewed, with many observations near 0 and spikes at values such as 12, 24, 52, and 104. The mean is 75.75 days and the median is 24. The middle 50% of values lie between 3 and 104, with a full range of 0 to 364. Values near 364 are far from most observations but remain within a year. The spikes indicate repeated reported or derived drinking frequencies. I retained the supplied values without reconstructing the underlying responses.
+
+### Unusual values
+
+I flagged unusual values and left the original measurements unchanged. A later review will document the coding checks for Age, Poverty, and zero diastolic readings. Extreme values alone were not sufficient grounds for removing observations.
