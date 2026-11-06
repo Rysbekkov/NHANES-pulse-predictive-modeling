@@ -236,3 +236,127 @@ Drinking days per year is strongly right-skewed, with many observations near 0 a
 ### Unusual values
 
 I flagged unusual values and left the original measurements unchanged. A later review will document the coding checks for Age, Poverty, and zero diastolic readings. Extreme values alone were not sufficient grounds for removing observations.
+
+
+## 5. Distributions of Categorical Predictors
+
+Percentages exclude missing responses. The frequency tables in Section 2 report missing values separately. The graphs below show recorded categories.
+
+### Gender
+
+```{r}
+gf_bar(~Gender, data = nhanes)
+```
+
+Gender is almost evenly divided: 907 participants are female (50.2%) and 900 are male (49.8%). Both categories have many observations, and there are no missing values.
+
+### Race
+
+```{r}
+gf_bar(~Race1, data = nhanes)
+```
+
+White is the most common category, containing 1,200 participants (66.4%). The remaining categories are Black (10.3%), Other (8.6%), Mexican (7.9%), and Hispanic (6.8%). The categories are unevenly distributed, but each contains more than 100 observations.
+
+### Education
+
+```{r}
+gf_bar(~Education, data = subset(nhanes, !is.na(Education))) +
+  coord_flip()
+```
+
+College graduates (32.4%) and participants with some college education (31.7%) are the largest groups. High school graduates account for 18.3%, followed by grades 9–11 (11.1%) and the 8th-grade category (6.5%). Every category has more than 100 observations. There are three missing responses.
+
+### Marital status
+
+```{r}
+gf_bar(~MaritalStatus, data = subset(nhanes, !is.na(MaritalStatus))) +
+  coord_flip()
+```
+
+Married participants form the largest group (53.2%), followed by participants who have never married (21.4%). The remaining categories are divorced (10.1%), living with a partner (7.3%), widowed (5.7%), and separated (2.3%). Separated is the smallest category, with 42 observations, so comparisons involving this group may be less precise. There are two missing responses.
+
+### Household income
+
+```{r}
+gf_bar(~HHIncome, data = subset(nhanes, !is.na(HHIncome))) +
+  coord_flip()
+```
+
+The largest household income category is $100,000 or more, containing 418 participants (25.2% of those with reported income). The smallest categories are $0–$4,999, with 37 observations, and $5,000–$9,999, with 41. The remaining participants are spread across the other income categories. There are 149 missing responses. The smaller groups may need consideration when deciding how to represent income in the model.
+
+### Work status
+
+```{r}
+gf_bar(~Work, data = nhanes)
+```
+
+Most participants are working (60.4%), followed by those not working (35.7%). Only 69 participants (3.8%) are looking for work. The Looking category is much smaller than the other two categories and may produce less precise comparisons. There are no missing responses.
+
+### Diabetes
+
+```{r}
+gf_bar(~Diabetes, data = nhanes)
+```
+
+Most participants report no diabetes: 1,613 (89.3%) answered No and 194 (10.7%) answered Yes. Although the categories are uneven, the Yes group still contains a substantial number of observations. There are no missing responses.
+
+### General health
+
+```{r}
+gf_bar(~HealthGen, data = subset(nhanes, !is.na(HealthGen)))
+```
+
+Good (39.8%) and very good (32.7%) are the most common health ratings. Fair accounts for 13.4%, excellent for 11.7%, and poor for 2.4%. Poor is the smallest category, with 39 observations, so comparisons involving this group should be interpreted carefully. There are 164 missing responses.
+
+### Trouble sleeping
+
+```{r}
+gf_bar(~SleepTrouble, data = nhanes)
+```
+
+A total of 512 participants (28.3%) report having told a health professional about trouble sleeping, while 1,295 (71.7%) do not. Both categories contain many observations. There are no missing responses.
+
+### Physical activity
+
+```{r}
+gf_bar(~PhysActive, data = nhanes)
+```
+
+Slightly more than half of participants report moderate or vigorous recreational activity: 1,002 (55.5%) answered Yes and 805 (44.5%) answered No. The categories are reasonably balanced, and there are no missing responses.
+
+### Television hours per day
+
+```{r}
+gf_bar(~TVHrsDay, data = subset(nhanes, !is.na(TVHrsDay)))
+```
+
+The most common response is 2 hours per day (26.3%), followed by 3 hours (17.4%). The smallest category is 0 hours, with 40 observations (2.2%). Participants are otherwise distributed across several viewing-time categories. There is one missing response.
+
+### Computer or gaming hours per day
+
+```{r}
+gf_bar(~CompHrsDay, data = nhanes)
+```
+
+The most common response is more than 0 but less than 1 hour per day (28.3%), followed by 0 hours (22.5%) and 1 hour (20.0%). Higher-use categories generally contain fewer participants. The smallest category is 4 hours, with 73 observations (4.0%). There are no missing responses.
+
+### Alcohol: at least 12 drinks in any one year
+
+```{r}
+gf_bar(~Alcohol12PlusYr, data = subset(nhanes, !is.na(Alcohol12PlusYr)))
+```
+
+Among participants with a recorded response, 1,300 (79.4%) report consuming at least 12 alcoholic drinks in any one year, while 338 (20.6%) do not. Both categories contain many observations, although Yes is substantially more common. There are 169 missing responses.
+
+### Smoking status
+
+```{r}
+gf_bar(~SmokeStatus, data = nhanes)
+```
+
+The largest group consists of participants who have smoked fewer than 100 lifetime cigarettes: 1,009 participants (55.8%). Former smokers account for 451 participants (25.0%), and current smokers account for 347 (19.2%). The Current and Former categories refer to participants who reported smoking at least 100 lifetime cigarettes. All three groups contain many observations, and the combined variable has no missing values.
+
+### Decisions from the categorical distributions
+
+I retained the categorical predictors for examination against Pulse. Several categories are relatively small, particularly Separated, Poor general health, the lowest income groups, and zero television hours. After examining their relationships with Pulse, I retained these categories, subject to separate coding review. Unequal category sizes alone do not establish whether a predictor is useful.
