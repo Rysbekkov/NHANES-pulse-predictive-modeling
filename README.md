@@ -17,8 +17,7 @@ nhanes-pulse-prediction/
 ├── README.md
 ├── NHANES_Pulse_Analysis.Rmd      # Exploratory analysis notebook
 ├── data/
-│   └── NHANES-training.csv       # Original training dataset (1,807 rows; 66 columns)
-└── .gitignore
+    └── NHANES-training.csv       # Original training dataset (1,807 rows; 66 columns)
 ```
 
 The notebook contains the analysis and figures documented in this README.
@@ -70,6 +69,9 @@ The exploratory stage investigates numerical and categorical distributions, miss
 | Derived variable | `SmokeStatus` constructed from `Smoke100` and `SmokeNow` |
 | Pulse distribution | Mean **72.62 bpm**, median **72 bpm**; range **40–136 bpm** |
 | Categorical distributions | Gender, race, education, health, and lifestyle categories examined with frequency tables and bar charts |
+| Numerical relationship | Age vs. Pulse: **r ≈ −0.189** (weak negative) |
+
+The age and blood-pressure comparisons are also shown in `figures/figure_1.png`.
 
 The visualizations and summaries are available in `NHANES_Pulse_Analysis.html` and the matching `figures/` directory.
 
@@ -81,14 +83,18 @@ Variable screening and exploratory comparisons provide the basis for regression 
 
 The Pulse distribution is centered at approximately **72 bpm** (mean **72.62 bpm**) and ranges from **40 to 136 bpm**.
 
+Age has a weak negative marginal association with Pulse; most numerical relationships examined are weak.
+
 These are descriptive associations, not causal effects or individual predictions.
 
 ## 8. Skills and tools demonstrated
 
-**R · R Markdown · Exploratory data analysis · Statistical visualization · Categorical frequency analysis · Feature engineering**
+**R · R Markdown · Exploratory data analysis · Statistical visualization · Correlation analysis · Feature engineering**
 
 ## 9. Data references
 
 - [CDC: National Health and Nutrition Examination Survey (NHANES)](https://www.cdc.gov/nchs/nhanes/)
 - [2011–2012 NHANES Demographics Documentation](https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/DEMO_G.htm)
 - [2011–2012 NHANES Blood Pressure Documentation](https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/BPX_G.htm)
+
+
