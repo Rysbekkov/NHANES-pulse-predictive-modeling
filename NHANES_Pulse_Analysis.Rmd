@@ -360,3 +360,115 @@ The largest group consists of participants who have smoked fewer than 100 lifeti
 ### Decisions from the categorical distributions
 
 I retained the categorical predictors for examination against Pulse. Several categories are relatively small, particularly Separated, Poor general health, the lowest income groups, and zero television hours. After examining their relationships with Pulse, I retained these categories, subject to separate coding review. Unequal category sizes alone do not establish whether a predictor is useful.
+
+## 6. Relationships Between Numerical Predictors and Pulse
+
+I used scatterplots to examine direction, form, strength, and unusual observations. Correlations were calculated using observations with both variables recorded.
+
+### Age and Pulse
+
+```{r}
+gf_point(Pulse ~ Age, data = nhanes, alpha = 0.5)
+cor(nhanes$Pulse, nhanes$Age, use = "complete.obs")
+```
+
+There is a weak negative relationship between Age and Pulse (r = -0.19). Older participants generally have lower pulse rates, although pulse varies considerably at every age. The overall pattern is approximately linear. Age is worth considering during model building.
+
+### Poverty and Pulse
+
+```{r}
+gf_point(Pulse ~ Poverty, data = nhanes, alpha = 0.5)
+cor(nhanes$Pulse, nhanes$Poverty, use = "complete.obs")
+```
+
+There is a weak negative relationship between Poverty and Pulse (r = -0.10). Higher income-to-poverty ratios tend to be associated with slightly lower pulse rates, but the points are widely scattered. The concentration at a ratio of 5 produces a vertical stack of observations.
+
+### BMI and Pulse
+
+```{r}
+gf_point(Pulse ~ BMI, data = nhanes, alpha = 0.5)
+cor(nhanes$Pulse, nhanes$BMI, use = "complete.obs")
+```
+
+The overall linear relationship between BMI and Pulse is weak and positive (r = 0.10). Pulse tends to be somewhat higher among participants with higher BMI, but the pattern is not a clear straight line. The largest BMI values are isolated from most observations and could influence a fitted relationship. BMI is worth further consideration, including checking whether its relationship with Pulse is curved.
+
+### Systolic blood pressure and Pulse
+
+```{r}
+gf_point(Pulse ~ BPSysAve, data = nhanes, alpha = 0.5)
+cor(nhanes$Pulse, nhanes$BPSysAve, use = "complete.obs")
+```
+
+There is little evidence of an overall linear relationship between systolic blood pressure and Pulse (r = -0.04). Pulse varies widely across the observed blood pressure readings. A few unusually high systolic readings are separated from the main cluster. This variable appears less promising when examined on its own.
+
+### Diastolic blood pressure and Pulse
+
+```{r}
+gf_point(Pulse ~ BPDiaAve, data = nhanes, alpha = 0.5)
+cor(nhanes$Pulse, nhanes$BPDiaAve, use = "complete.obs")
+```
+
+There is a weak positive relationship between diastolic blood pressure and Pulse (r = 0.13), with considerable scatter. Higher diastolic readings tend to accompany slightly higher pulse rates. The five zero readings are separated from the main cluster. Their coding was investigated and the supplied averages were retained, subject to separate coding review.
+
+### Testosterone and Pulse
+
+```{r}
+gf_point(Pulse ~ Testosterone, data = nhanes, alpha = 0.5)
+cor(nhanes$Pulse, nhanes$Testosterone, use = "complete.obs")
+```
+
+There is a weak negative overall linear relationship between Testosterone and Pulse (r = -0.13). The observations are unevenly distributed, with many low testosterone readings and a broad range of pulse rates. The pattern is not well summarized by a single straight line. Separate comparisons by Gender may help explain this pooled relationship.
+
+### HDL cholesterol and Pulse
+
+```{r}
+gf_point(Pulse ~ DirectChol, data = nhanes, alpha = 0.5)
+cor(nhanes$Pulse, nhanes$DirectChol, use = "complete.obs")
+```
+
+There is almost no overall linear relationship between HDL cholesterol and Pulse (r = -0.02). The scatterplot has no clear upward or downward trend. A few high HDL readings are isolated from the main cluster and were retained for further coding review. HDL cholesterol appears less promising as an individual predictor.
+
+### Total cholesterol and Pulse
+
+```{r}
+gf_point(Pulse ~ TotChol, data = nhanes, alpha = 0.5)
+cor(nhanes$Pulse, nhanes$TotChol, use = "complete.obs")
+```
+
+There is almost no overall linear relationship between total cholesterol and Pulse (r = 0.03). Pulse varies substantially across cholesterol readings, without a clear trend. The highest cholesterol readings are isolated and were retained for further coding review. Total cholesterol appears less promising when considered alone.
+
+### Days of poor physical health and Pulse
+
+```{r}
+gf_point(Pulse ~ DaysPhysHlthBad, data = nhanes, alpha = 0.5)
+cor(nhanes$Pulse, nhanes$DaysPhysHlthBad, use = "complete.obs")
+```
+
+There is little overall linear relationship between days of poor physical health and Pulse (r = -0.03). Many observations occur at 0 days, and pulse rates vary widely within this group. The remaining observations do not show a consistent upward or downward pattern.
+
+### Days of poor mental health and Pulse
+
+```{r}
+gf_point(Pulse ~ DaysMentHlthBad, data = nhanes, alpha = 0.5)
+cor(nhanes$Pulse, nhanes$DaysMentHlthBad, use = "complete.obs")
+```
+
+There is a weak positive relationship between days of poor mental health and Pulse (r = 0.10). Participants reporting more days of poor mental health tend to have slightly higher pulse rates, although there is substantial scatter. The large concentration at 0 days and smaller numbers at many other values should be considered when interpreting the pattern.
+
+### Hours of sleep and Pulse
+
+```{r}
+gf_point(Pulse ~ SleepHrsNight, data = nhanes, alpha = 0.5)
+cor(nhanes$Pulse, nhanes$SleepHrsNight, use = "complete.obs")
+```
+
+There is essentially no overall linear relationship between hours of sleep and Pulse (r = -0.01). Pulse rates vary widely within the common sleep durations of 6, 7, and 8 hours. Very short and very long sleep durations have few observations, making their patterns difficult to assess.
+
+### Drinking days per year and Pulse
+
+```{r}
+gf_point(Pulse ~ AlcoholYear, data = nhanes, alpha = 0.5)
+cor(nhanes$Pulse, nhanes$AlcoholYear, use = "complete.obs")
+```
+
+There is almost no overall linear relationship between drinking days per year and Pulse (r = -0.01). Pulse rates are spread widely across drinking frequencies, without a consistent trend. Combined with its 19.1% missingness, this makes AlcoholYear a lower-priority candidate based on the initial EDA.
