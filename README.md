@@ -1,4 +1,4 @@
-# NHANES-pulse-predictive-modeling
+# NHANES Pulse Predictive Modeling
 
 Statistical analysis of NHANES health data using R, including data screening, feature engineering, descriptive statistics, and exploratory visualizations. Regression modeling and evaluation are planned for later stages.
 
@@ -8,32 +8,32 @@ Statistical analysis of NHANES health data using R, including data screening, fe
 
 This project uses the 2011–2012 NHANES training dataset to investigate resting pulse rate (beats per minute). The analysis includes data inspection, missing-value assessment, exploratory visualization, and feature engineering.
 
-The analysis is organized in **one R Markdown notebook**. The findings so far are descriptive and do not establish cause-and-effect relationships.
+The analysis is organized in **one R Markdown notebook**. Findings describe associations, not cause-and-effect relationships.
 
 ## 1. Project structure
 
 ```text
-nhanes-pulse-predictive-modeling/
+nhanes-pulse-prediction/
+├── README.md
+├── NHANES_Pulse_Analysis.Rmd      # Exploratory analysis notebook
 ├── data/
-│   └── NHANES-training.csv         # Training dataset (1,807 rows; 66 columns)
-├── figures/                        # Pulse and numerical predictor histograms
-├── NHANES_Pulse_Analysis.Rmd       # Analysis notebook
-└── README.md                       # Project overview and instructions
+│   └── NHANES-training.csv       # Original training dataset (1,807 rows; 66 columns)
+└── .gitignore
 ```
 
-The R Markdown notebook contains the analysis, and the `figures/` folder contains 13 exported histograms.
+The notebook contains the analysis and figures documented in this README.
 
 ## 2. Prerequisites
 
-- **R** and **RStudio** (recommended)
-- R packages: `rmarkdown`, `knitr`, `mosaic`, and `ggformula`
-- **Pandoc** (included with RStudio; required to render the notebook)
-- The training dataset at `data/NHANES-training.csv`
+- **R 4.1 or newer** (the modeling code uses R’s native `|>` pipe) and **RStudio** (recommended, optional)
+- R packages: `rmarkdown`, `knitr`, `mosaic`, `ggformula`, and `dplyr`
+- **Pandoc** (included with RStudio; required for HTML knitting)
+- The included training dataset at `data/NHANES-training.csv`
 
 Install the R packages in R or the RStudio console:
 
 ```r
-install.packages(c("rmarkdown", "knitr", "mosaic", "ggformula"))
+install.packages(c("rmarkdown", "knitr", "mosaic", "ggformula", "dplyr"))
 ```
 
 ## 3. How to run the project
@@ -42,57 +42,50 @@ install.packages(c("rmarkdown", "knitr", "mosaic", "ggformula"))
 
 1. Download or clone this repository and open the folder in RStudio.
 2. Open `NHANES_Pulse_Analysis.Rmd`.
-3. Select **Knit** to run the analysis and render the report.
+3. Use the **Knit** menu and select **Knit to HTML**. All analysis sections run from the top, in order.
 
 **Option B — Terminal:**
 
-Run the following command **from the repository root**:
+Run the following commands **from the repository root**:
 
 ```bash
 Rscript -e 'rmarkdown::render("NHANES_Pulse_Analysis.Rmd")'
 ```
 
-The notebook reads the dataset using a relative path, so no absolute file paths are required.
+The command renders the analysis as HTML. **No absolute file paths are required.**
 
 ## 4. Dataset
 
-The supplied `NHANES-training.csv` contains **1,807 observations and 66 columns** from a 2011–2012 National Health and Nutrition Examination Survey (NHANES) training sample. The outcome variable is **`Pulse` (beats per minute)**, with 47 missing Pulse values.
+The supplied `NHANES-training.csv` contains **1,807 observations and 66 columns**, drawn from a course-provided 2011–2012 National Health and Nutrition Examination Survey (NHANES) training sample. The outcome is **`Pulse` (beats per minute)**. There are 47 missing Pulse values.
 
-This is a training subset. Results are not weighted population estimates and should not be interpreted as representative of all U.S. adults.
+The repository includes the **full training CSV**, not a fabricated or simulated replacement. This is a course-provided subset, so confirm that course rules permit publishing the specific file. Do not treat the unweighted results as population-representative estimates.
 
 ## 5. Exploratory data analysis
 
-The exploratory stage investigates missing values, variable distributions, and unusual observations before regression modeling.
+The exploratory stage investigates numerical and categorical distributions, missingness, candidate relationships with Pulse, unusual observations, and relationships between predictors.
 
 | EDA finding | Observation |
 | --- | --- |
 | High missingness | `PhysActiveDays`: **52.7%**; `AlcoholDay`: **33.3%** |
 | Derived variable | `SmokeStatus` constructed from `Smoke100` and `SmokeNow` |
 | Pulse distribution | Mean **72.62 bpm**, median **72 bpm**; range **40–136 bpm** |
-| Numerical predictors | Histograms and summary statistics for **12 variables**, including age, BMI, blood pressure, cholesterol, sleep, and alcohol frequency |
-| Distribution patterns | Several measures are right-skewed; age and poverty have upper-coded values; poor-health day counts are concentrated at zero |
+| Categorical distributions | Gender, race, education, health, and lifestyle categories examined with frequency tables and bar charts |
 
-Unusually high or low measurements were flagged for further examination rather than automatically removed.
-
-### Pulse distribution
-
-![Pulse distribution](figures/s03_3_distribution_of_pulse.png)
-
-The remaining predictor histograms are available in the `figures/` folder.
+The visualizations and summaries are available in `NHANES_Pulse_Analysis.html` and the matching `figures/` directory.
 
 ## 6. Regression modeling
 
-Variable screening and exploratory comparisons provide the basis for regression modeling. **Model fitting, interaction effects, and model evaluation have not yet been completed.**
+Variable screening and exploratory comparisons provide the basis for regression modeling. Model estimates are not included in this version.
 
 ## 7. Results and interpretation
 
-Resting Pulse is centered near **72 bpm**, with a slightly right-skewed distribution. BMI and systolic blood pressure are also right-skewed, while poor physical and mental health days have many zero responses. Some predictors contain unusual observations or reporting limits that will need consideration during modeling.
+The Pulse distribution is centered at approximately **72 bpm** (mean **72.62 bpm**) and ranges from **40 to 136 bpm**.
 
-These are descriptive findings, not causal effects or validated individual predictions.
+These are descriptive associations, not causal effects or individual predictions.
 
 ## 8. Skills and tools demonstrated
 
-**R · R Markdown · Data inspection · Missing-data profiling · Feature engineering · Descriptive statistics · Histograms · Outlier screening**
+**R · R Markdown · Exploratory data analysis · Statistical visualization · Categorical frequency analysis · Feature engineering**
 
 ## 9. Data references
 
