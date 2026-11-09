@@ -472,3 +472,142 @@ cor(nhanes$Pulse, nhanes$AlcoholYear, use = "complete.obs")
 ```
 
 There is almost no overall linear relationship between drinking days per year and Pulse (r = -0.01). Pulse rates are spread widely across drinking frequencies, without a consistent trend. Combined with its 19.1% missingness, this makes AlcoholYear a lower-priority candidate based on the initial EDA.
+
+## 7. Relationships Between Categorical Predictors and Pulse
+
+I used side-by-side boxplots and grouped numerical summaries to compare Pulse across categories. The reported means use participants with recorded Pulse and a recorded predictor category. Differences between groups describe associations and do not establish causation.
+
+### Gender and Pulse
+
+```{r}
+favstats(Pulse ~ Gender, data = nhanes)
+gf_boxplot(Pulse ~ Gender, data = nhanes)
+```
+
+Female participants have a higher mean pulse than male participants: 73.71 compared with 71.53 beats per minute. Their medians are 74 and 70, respectively. The distributions overlap substantially, but the difference in their centers makes Gender worth considering.
+
+### Race and Pulse
+
+```{r}
+favstats(Pulse ~ Race1, data = nhanes)
+gf_boxplot(Pulse ~ Race1, data = nhanes)
+```
+
+Mean pulse rates range from 71.79 in the Black category to 73.97 in the Other category. Most category medians are close to 72, and the distributions overlap substantially. Race1 shows relatively small differences in Pulse when examined alone.
+
+### Education and Pulse
+
+```{r}
+favstats(Pulse ~ Education, data = nhanes)
+gf_boxplot(Pulse ~ Education,
+           data = subset(nhanes, !is.na(Education))) +
+  coord_flip()
+```
+
+Mean pulse differs across education categories. It is lowest in the 8thGrade category at 70.04 and highest in SomeCollege at 73.73 beats per minute. College graduates have a mean of 71.53. The distributions overlap, and the differences do not follow a simple increasing or decreasing educational pattern. Education is worth examining alongside Age.
+
+### Marital status and Pulse
+
+```{r}
+favstats(Pulse ~ MaritalStatus, data = nhanes)
+gf_boxplot(Pulse ~ MaritalStatus,
+           data = subset(nhanes, !is.na(MaritalStatus))) +
+  coord_flip()
+```
+
+Participants who have never married have a mean pulse of 75.15, compared with 71.26 among married participants. Participants living with a partner also have a relatively high mean of 74.37. The distributions overlap, but the differences in centers make MaritalStatus worth considering. Its relationship with Age should also be examined.
+
+### Household income and Pulse
+
+```{r}
+favstats(Pulse ~ HHIncome, data = nhanes)
+gf_boxplot(Pulse ~ HHIncome,
+           data = subset(nhanes, !is.na(HHIncome))) +
+  coord_flip()
+```
+
+Mean pulse differs across income categories, but there is no consistent step-by-step pattern. For example, the mean is 74.63 in the $20,000–$24,999 category, 69.31 in the $65,000–$74,999 category, and 71.03 in the $100,000-or-more category. The distributions overlap substantially. Income should be examined alongside Poverty because they describe related economic circumstances.
+
+### Work status and Pulse
+
+```{r}
+favstats(Pulse ~ Work, data = nhanes)
+gf_boxplot(Pulse ~ Work, data = nhanes)
+```
+
+Participants looking for work have the highest mean pulse at 74.06, followed by those not working at 73.09 and those working at 72.25. The differences are small relative to the variation within each group. Only 65 participants in the Looking category have recorded Pulse, so comparisons involving this group are less precise.
+
+### Diabetes and Pulse
+
+```{r}
+favstats(Pulse ~ Diabetes, data = nhanes)
+gf_boxplot(Pulse ~ Diabetes, data = nhanes)
+```
+
+Participants reporting diabetes have a slightly higher mean pulse than those without diabetes: 73.84 compared with 72.47. Both groups have a median of 72, and their distributions overlap substantially. Diabetes shows only a small unadjusted difference in Pulse.
+
+### General health and Pulse
+
+```{r}
+favstats(Pulse ~ HealthGen, data = nhanes)
+gf_boxplot(Pulse ~ HealthGen,
+           data = subset(nhanes, !is.na(HealthGen)))
+```
+
+Mean pulse rates are similar across general-health categories, ranging from 71.97 for very good health to 73.59 for fair health. There is no consistent increase in Pulse as reported health becomes worse. The Poor category has only 39 observations and a relatively wide spread, so its summary is less stable.
+
+### Trouble sleeping and Pulse
+
+```{r}
+favstats(Pulse ~ SleepTrouble, data = nhanes)
+gf_boxplot(Pulse ~ SleepTrouble, data = nhanes)
+```
+
+Participants reporting trouble sleeping have a mean pulse of 73.03, compared with 72.45 among those who do not. Both groups have a median of 72, and their distributions are very similar. SleepTrouble shows little separation in Pulse when examined alone.
+
+### Physical activity and Pulse
+
+```{r}
+favstats(Pulse ~ PhysActive, data = nhanes)
+gf_boxplot(Pulse ~ PhysActive, data = nhanes)
+```
+
+Physically active and inactive participants have very similar pulse distributions. Their means are 72.74 and 72.46, respectively, and both groups have a median of 72. The boxplots show little unadjusted association between this activity measure and Pulse.
+
+### Television hours and Pulse
+
+```{r}
+favstats(Pulse ~ TVHrsDay, data = nhanes)
+gf_boxplot(Pulse ~ TVHrsDay,
+           data = subset(nhanes, !is.na(TVHrsDay)))
+```
+
+Participants watching more than 4 hours of television per day have a mean pulse of 74.40, compared with 71.40 among those watching 1 hour and 71.03 among those watching 3 hours. The distributions overlap, and the pattern is not consistently increasing across categories. Higher viewing categories show some differences worth further examination.
+
+### Computer or gaming hours and Pulse
+
+```{r}
+favstats(Pulse ~ CompHrsDay, data = nhanes)
+gf_boxplot(Pulse ~ CompHrsDay, data = nhanes)
+```
+
+Mean pulse generally increases across computer or gaming time categories, from 71.68 among participants reporting 0 hours to 74.84 among those reporting more than 4 hours. The distributions overlap considerably, so the association is modest. This variable is worth examining alongside Age and the other predictors.
+
+### Alcohol history and Pulse
+
+```{r}
+favstats(Pulse ~ Alcohol12PlusYr, data = nhanes)
+gf_boxplot(Pulse ~ Alcohol12PlusYr,
+           data = subset(nhanes, !is.na(Alcohol12PlusYr)))
+```
+
+Participants reporting at least 12 drinks in any one year have a mean pulse of 72.45, compared with 73.31 among those answering No. Both groups have a median of 72, and their distributions overlap substantially. This variable shows only a small unadjusted difference in Pulse.
+
+### Smoking status and Pulse
+
+```{r}
+favstats(Pulse ~ SmokeStatus, data = nhanes)
+gf_boxplot(Pulse ~ SmokeStatus, data = nhanes)
+```
+
+Current smokers have a mean pulse of 73.65, compared with 72.23 among former smokers and 72.44 among participants who have smoked fewer than 100 lifetime cigarettes. All three groups have a median of 72, and the distributions overlap substantially. Smoking status shows a modest difference in group means that can be considered alongside other predictors.
