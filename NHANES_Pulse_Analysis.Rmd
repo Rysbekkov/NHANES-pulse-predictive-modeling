@@ -417,7 +417,7 @@ gf_point(Pulse ~ Testosterone, data = nhanes, alpha = 0.5)
 cor(nhanes$Pulse, nhanes$Testosterone, use = "complete.obs")
 ```
 
-There is a weak negative overall linear relationship between Testosterone and Pulse (r = -0.13). The observations are unevenly distributed, with many low testosterone readings and a broad range of pulse rates. The pattern is not well summarized by a single straight line. Separate comparisons by Gender may help explain this pooled relationship.
+There is a weak negative overall linear relationship between Testosterone and Pulse (r = -0.13). The observations are unevenly distributed, with many low testosterone readings and a broad range of pulse rates. The pattern is not well summarized by a single straight line. The comparison with Gender in Section 9 provides context for this pooled relationship.
 
 ### HDL cholesterol and Pulse
 
@@ -611,3 +611,145 @@ gf_boxplot(Pulse ~ SmokeStatus, data = nhanes)
 ```
 
 Current smokers have a mean pulse of 73.65, compared with 72.23 among former smokers and 72.44 among participants who have smoked fewer than 100 lifetime cigarettes. All three groups have a median of 72, and the distributions overlap substantially. Smoking status shows a modest difference in group means that can be considered alongside other predictors.
+
+## 8. Initial Conclusions From the Predictor–Pulse Comparisons
+
+None of the numerical predictors shows a strong individual linear relationship with Pulse. Age has the clearest overall linear trend, while Poverty, BMI, diastolic blood pressure, Testosterone, and days of poor mental health show weaker patterns worth investigating further.
+
+Among the categorical predictors, Gender, Education, MaritalStatus, and computer or gaming hours show differences in group centers worth further examination. Television hours, smoking status, and household income also show some differences, although their distributions overlap substantially.
+
+These comparisons provide an initial guide rather than a final selection. A predictor with a weak individual relationship may still contribute when considered with other variables. These comparisons motivate a later review of relationships among predictors and the EDA shortlist.
+
+
+## 9. Relationships Between Predictors
+
+I examined selected predictor relationships to identify overlapping information, group differences, and patterns that may matter during model building. Each comparison uses observations with the relevant variables recorded.
+
+### Age, BMI, and blood pressure
+
+```{r}
+pairs(~Age + BMI + BPSysAve + BPDiaAve, data = nhanes)
+
+cor(nhanes[c("Age", "BMI", "BPSysAve", "BPDiaAve")],
+    use = "pairwise.complete.obs")
+```
+
+Age and systolic blood pressure have a moderate positive relationship (r = 0.42): older participants generally have higher systolic readings. Systolic and diastolic blood pressure also have a moderate positive relationship (r = 0.36), although the readings are far from perfectly related.
+
+The relationship between Age and diastolic blood pressure appears curved, with readings generally rising into middle adulthood and then declining at older ages. Its near-zero linear correlation therefore does not fully describe the pattern. BMI has relatively weak linear relationships with Age and the two blood pressure measures.
+
+These relationships suggest that age and blood pressure should be considered together. The five zero diastolic readings were investigated and retained, subject to separate coding review.
+
+### Household income and Poverty
+
+```{r}
+favstats(Poverty ~ HHIncome, data = nhanes)
+gf_boxplot(Poverty ~ HHIncome,
+           data = subset(nhanes, !is.na(HHIncome))) +
+  coord_flip()
+```
+
+Poverty ratios generally increase across higher household income categories. The median ratio rises from 0.13 in the lowest income category to 5.00 in the highest category. This shows substantial overlap in the economic information represented by HHIncome and Poverty.
+
+The measures use different definitions and are not interchangeable. However, including both may add complexity without much additional information. The modeling stage should compare their contributions rather than automatically include both.
+
+### Gender and Testosterone
+
+```{r}
+favstats(Testosterone ~ Gender, data = nhanes)
+gf_boxplot(Testosterone ~ Gender, data = nhanes)
+```
+
+Testosterone differs substantially between the Gender groups. The median is 19.88 ng/dL among female participants and 377.90 ng/dL among male participants. Male participants also have a much wider spread.
+
+These group differences help explain the two concentrations in the overall Testosterone distribution. Its relationship with Pulse should therefore be examined alongside Gender. The pooled negative association between Testosterone and Pulse may not describe the relationship within each group.
+
+### Age and Education
+
+```{r}
+favstats(Age ~ Education, data = nhanes)
+gf_boxplot(Age ~ Education,
+           data = subset(nhanes, !is.na(Education))) +
+  coord_flip()
+```
+
+Age distributions differ across education categories. Participants in the 8thGrade category have a median age of 60, compared with 43 among those with some college education and 46 among college graduates.
+
+Because Age is associated with Pulse, some differences in Pulse across education categories could reflect differences in age composition. Education should therefore be considered alongside Age before interpreting its contribution.
+
+### Age and Marital status
+
+```{r}
+favstats(Age ~ MaritalStatus, data = nhanes)
+gf_boxplot(Age ~ MaritalStatus,
+           data = subset(nhanes, !is.na(MaritalStatus))) +
+  coord_flip()
+```
+
+Age differs considerably across marital-status categories. The median age is 28 among participants who have never married, 49.5 among married participants, and 74 among widowed participants.
+
+Participants who have never married also had a higher average Pulse than married participants. Their younger age distribution could partly account for that difference. I should assess whether MaritalStatus provides additional information after accounting for Age.
+
+### Age and Work status
+
+```{r}
+favstats(Age ~ Work, data = nhanes)
+gf_boxplot(Age ~ Work, data = nhanes)
+```
+
+Participants who are not working tend to be older. Their median age is 61, compared with 43 among working participants and 38 among those looking for work.
+
+Work status therefore contains information related to Age. Differences in Pulse across work categories should be interpreted with these age differences in mind.
+
+### Age and Computer or gaming hours
+
+```{r}
+favstats(Age ~ CompHrsDay, data = nhanes)
+gf_boxplot(Age ~ CompHrsDay, data = nhanes)
+```
+
+Participants reporting no computer or gaming time tend to be older, with a median age of 58. The median is 42.5 among those reporting 1 hour, 28 among those reporting 4 hours, and 37 among those reporting more than 4 hours.
+
+The age pattern is not perfectly consistent across categories, but higher-use groups generally contain younger participants. This could partly explain their higher average Pulse, since younger participants tend to have higher pulse rates.
+
+### Age and Diabetes
+
+```{r}
+favstats(Age ~ Diabetes, data = nhanes)
+gf_boxplot(Age ~ Diabetes, data = nhanes)
+```
+
+Participants reporting diabetes tend to be older. Their median age is 61, compared with 44 among participants without diabetes.
+
+Because Age is associated with both diabetes status and Pulse, the small unadjusted difference in Pulse between diabetes groups may change when Age is considered. Diabetes should not be judged solely from its individual comparison with Pulse.
+
+### BMI and HDL cholesterol
+
+```{r}
+gf_point(DirectChol ~ BMI, data = nhanes, alpha = 0.5)
+cor(nhanes$DirectChol, nhanes$BMI, use = "complete.obs")
+```
+
+BMI and HDL cholesterol have a moderate negative relationship (r = -0.36). Participants with higher BMI generally have lower HDL cholesterol, although there is considerable scatter.
+
+The variables contain some related information, but the association is not strong enough to treat them as interchangeable. Their contributions to predicting Pulse would need to be evaluated together.
+
+### Physical and mental health days
+
+```{r}
+gf_point(DaysMentHlthBad ~ DaysPhysHlthBad,
+         data = nhanes, alpha = 0.5)
+
+cor(nhanes$DaysMentHlthBad, nhanes$DaysPhysHlthBad,
+    use = "complete.obs")
+```
+
+Days of poor physical and mental health have a weak positive relationship (r = 0.22). Participants reporting more days of poor physical health tend to report somewhat more days of poor mental health, but the observations are widely scattered.
+
+Many participants report zero days for one or both measures. The two variables capture related aspects of health but do not provide identical information.
+
+### Implications for the EDA shortlist
+
+Age is related to several other predictors, particularly MaritalStatus, Work, Education, computer or gaming hours, and Diabetes. Their individual relationships with Pulse may therefore differ from their relationships after accounting for Age.
+
+HHIncome and Poverty show substantial overlap, while Gender and Testosterone also share considerable information. These combinations deserve attention when choosing an effective set of predictors. Moderate associations, such as those between the blood pressure measures or between BMI and HDL cholesterol, do not by themselves justify removing a variable.
