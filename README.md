@@ -16,9 +16,9 @@ The analysis is organized in **one R Markdown notebook**. Findings describe asso
 nhanes-pulse-prediction/
 ├── data/
 │   └── NHANES-training.csv
-├── README.md
 ├── figures/
-└── NHANES_Pulse_Analysis.Rmd
+├── NHANES_Pulse_Analysis.Rmd
+└── README.md
 ```
 
 The notebook contains the analysis and figures documented in this README.
@@ -72,8 +72,11 @@ The exploratory stage investigates numerical and categorical distributions, miss
 | Categorical distributions | Gender, race, education, health, and lifestyle categories examined with frequency tables and bar charts |
 | Numerical relationship | Age vs. Pulse: **r ≈ −0.189** (weak negative) |
 | Group comparisons | Pulse compared across demographic, health, and lifestyle categories |
+| Predictor overlap | Age and systolic blood pressure (**r ≈ 0.42**); gender and testosterone distributions differ substantially |
 
 The age and blood-pressure comparisons are also shown in `figures/figure_1.png`.
+
+The gender–testosterone distributions and within-group trends are also shown in `figures/figure_2.png`.
 
 The visualizations and summaries are available in `NHANES_Pulse_Analysis.html` and the matching `figures/` directory.
 
@@ -89,17 +92,16 @@ Age has a weak negative marginal association with Pulse; most numerical relation
 
 Group summaries and boxplots show some differences in Pulse across demographic and lifestyle categories; these are unadjusted comparisons.
 
+Comparisons among predictors show overlap involving Age, blood pressure, income, and gender-linked testosterone measurements.
+
 These are descriptive associations, not causal effects or individual predictions.
 
 ## 8. Skills and tools demonstrated
 
-**R · R Markdown · Exploratory data analysis · Statistical visualization · Boxplots · Group comparisons · Correlation analysis**
+**R · R Markdown · Exploratory data analysis · Correlation analysis · Predictor screening · Statistical visualization**
 
 ## 9. Data references
 
 - [CDC: National Health and Nutrition Examination Survey (NHANES)](https://www.cdc.gov/nchs/nhanes/)
 - [2011–2012 NHANES Demographics Documentation](https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/DEMO_G.htm)
 - [2011–2012 NHANES Blood Pressure Documentation](https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/BPX_G.htm)
-
-
-
