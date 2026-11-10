@@ -73,12 +73,13 @@ The exploratory stage investigates numerical and categorical distributions, miss
 | Numerical relationship | Age vs. Pulse: **r ≈ −0.189** (weak negative) |
 | Group comparisons | Pulse compared across demographic, health, and lifestyle categories |
 | Predictor overlap | Age and systolic blood pressure (**r ≈ 0.42**); gender and testosterone distributions differ substantially |
+| Complete-case EDA shortlist | **1,439** observations with Pulse and all 13 shortlisted predictors recorded |
 
 The age and blood-pressure comparisons are also shown in `figures/figure_1.png`.
 
 The gender–testosterone distributions and within-group trends are also shown in `figures/figure_2.png`.
 
-The visualizations and summaries are available in `NHANES_Pulse_Analysis.html` and the matching `figures/` directory.
+Unusual observations were inspected rather than automatically removed. The EDA findings guided selection of 13 candidate predictors for modeling.
 
 ## 6. Regression modeling
 
@@ -94,11 +95,13 @@ Group summaries and boxplots show some differences in Pulse across demographic a
 
 Comparisons among predictors show overlap involving Age, blood pressure, income, and gender-linked testosterone measurements.
 
+The EDA shortlist includes 13 predictors; **1,439** observations have recorded values for Pulse and all shortlisted predictors. Outlying recorded values were retained after checking their meaning and plausibility.
+
 These are descriptive associations, not causal effects or individual predictions.
 
 ## 8. Skills and tools demonstrated
 
-**R · R Markdown · Exploratory data analysis · Correlation analysis · Predictor screening · Statistical visualization**
+**R · R Markdown · Data cleaning · Missing-data profiling · Exploratory data analysis · Feature engineering · Statistical visualization · Correlation analysis · Technical reporting**
 
 ## 9. Data references
 
