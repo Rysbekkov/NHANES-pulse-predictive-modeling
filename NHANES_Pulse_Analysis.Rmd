@@ -111,7 +111,7 @@ favstats(~Pulse, data = nhanes)
 gf_histogram(~Pulse, data = nhanes, bins = 30)
 ```
 
-Pulse is unimodal and slightly right-skewed. The mean is 72.62 beats per minute and the median is 72. The middle 50% of values lie between 64 and 80, with a full range of 40 to 136. The value of 136 is separated from the main cluster. It was retained because the available information does not establish a recording error; unusual values require separate review. There are 47 missing Pulse values.
+Pulse is unimodal and slightly right-skewed. The mean is 72.62 beats per minute and the median is 72. The middle 50% of values lie between 64 and 80, with a full range of 40 to 136. The value of 136 is separated from the main cluster. It was retained because the available information does not establish a recording error; the decision is documented in Section 10. There are 47 missing Pulse values.
 
 ## 4. Distributions of Numerical Predictors
 
@@ -132,7 +132,7 @@ favstats(~Age, data = nhanes)
 gf_histogram(~Age, data = nhanes, bins = 30)
 ```
 
-Recorded Age is broadly distributed across adulthood rather than bell-shaped. The mean of the recorded values is 47.40 years and the median is 47. The middle 50% lie between 33 and 61, with a recorded range of 20 to 80. The 87 observations coded as 80 represent participants aged 80 or older, consistent with the reported age coding.
+Recorded Age is broadly distributed across adulthood rather than bell-shaped. The mean of the recorded values is 47.40 years and the median is 47. The middle 50% lie between 33 and 61, with a recorded range of 20 to 80. The 87 observations coded as 80 represent participants aged 80 or older, consistent with the reporting rules discussed in Section 10.
 
 ### Poverty
 
@@ -141,7 +141,7 @@ favstats(~Poverty, data = nhanes)
 gf_histogram(~Poverty, data = nhanes, bins = 30)
 ```
 
-Poverty has an irregular distribution with a large spike at 5. The mean is 2.89 and the median is 2.86. The middle 50% of values lie between 1.33 and 4.89, with a full range of 0 to 5. The 400 observations equal to 5 represent ratios of 5 or higher. This concentration reflects a reporting limit.
+Poverty has an irregular distribution with a large spike at 5. The mean is 2.89 and the median is 2.86. The middle 50% of values lie between 1.33 and 4.89, with a full range of 0 to 5. The 400 observations equal to 5 represent ratios of 5 or higher. This concentration reflects the reporting limit discussed in Section 10.
 
 ### BMI
 
@@ -168,7 +168,7 @@ favstats(~BPDiaAve, data = nhanes)
 gf_histogram(~BPDiaAve, data = nhanes, bins = 30)
 ```
 
-Most average diastolic blood pressure readings form a roughly symmetric, unimodal cluster around 72 mm Hg, but low readings create a longer left tail. The mean is 71.34 mm Hg and the median is 72. The middle 50% lie between 65 and 78, with a full range of 0 to 107. Five observations equal 0. I examined their recorded readings and retained the supplied averages, for further examination.
+Most average diastolic blood pressure readings form a roughly symmetric, unimodal cluster around 72 mm Hg, but low readings create a longer left tail. The mean is 71.34 mm Hg and the median is 72. The middle 50% lie between 65 and 78, with a full range of 0 to 107. Five observations equal 0. I examined their recorded readings and retained the supplied averages, as explained in Section 10.
 
 ### Testosterone
 
@@ -177,7 +177,7 @@ favstats(~Testosterone, data = nhanes)
 gf_histogram(~Testosterone, data = nhanes, bins = 30)
 ```
 
-Testosterone has a large concentration of low values and a broader second concentration at several hundred ng/dL, with a long right tail. The mean is 217.83 ng/dL and the median is approximately 91.73. The middle 50% of values lie between 19.89 and 378.33, with a full range of 1.79 to 1795.60. The largest readings, especially 1795.60, were flagged and retained, for further examination. Gender-specific distributions may explain the two concentrations.
+Testosterone has a large concentration of low values and a broader second concentration at several hundred ng/dL, with a long right tail. The mean is 217.83 ng/dL and the median is approximately 91.73. The middle 50% of values lie between 19.89 and 378.33, with a full range of 1.79 to 1795.60. The largest readings, especially 1795.60, were flagged and retained, as discussed in Section 10. The Gender comparison in Section 9 helps explain the two concentrations.
 
 ### HDL cholesterol
 
@@ -186,7 +186,7 @@ favstats(~DirectChol, data = nhanes)
 gf_histogram(~DirectChol, data = nhanes, bins = 30)
 ```
 
-HDL cholesterol is unimodal and right-skewed. The mean is 1.36 mmol/L and the median is 1.29. The middle 50% of readings lie between 1.09 and 1.58, with a full range of 0.47 to 3.83. Readings around 3.59 and the maximum of 3.83 are unusually high compared with most observations. They were flagged and retained, for further examination.
+HDL cholesterol is unimodal and right-skewed. The mean is 1.36 mmol/L and the median is 1.29. The middle 50% of readings lie between 1.09 and 1.58, with a full range of 0.47 to 3.83. Readings around 3.59 and the maximum of 3.83 are unusually high compared with most observations. They were flagged and retained, as discussed in Section 10.
 
 ### Total cholesterol
 
@@ -195,7 +195,7 @@ favstats(~TotChol, data = nhanes)
 gf_histogram(~TotChol, data = nhanes, bins = 30)
 ```
 
-Total cholesterol is unimodal and slightly right-skewed, with a few high readings extending the right tail. The mean is 5.01 mmol/L and the median is 4.91. The middle 50% of readings lie between 4.27 and 5.66, with a full range of 2.17 to 12.28. Readings of 10.29 and 12.28 are far above the main cluster. They were flagged and retained, for further examination.
+Total cholesterol is unimodal and slightly right-skewed, with a few high readings extending the right tail. The mean is 5.01 mmol/L and the median is 4.91. The middle 50% of readings lie between 4.27 and 5.66, with a full range of 2.17 to 12.28. Readings of 10.29 and 12.28 are far above the main cluster. They were flagged and retained, as discussed in Section 10.
 
 ### Days of poor physical health
 
@@ -222,7 +222,7 @@ favstats(~SleepHrsNight, data = nhanes)
 gf_histogram(~SleepHrsNight, data = nhanes, bins = 30)
 ```
 
-Hours of sleep has a roughly symmetric overall distribution concentrated at 6, 7, and 8 hours, with 8 hours the most frequent response. The mean is 6.88 hours and the median is 7. The middle 50% of values lie between 6 and 8, with a full range of 2 to 12. Reports of 2 and 12 hours are unusual compared with the main cluster. They were flagged and retained, for further examination.
+Hours of sleep has a roughly symmetric overall distribution concentrated at 6, 7, and 8 hours, with 8 hours the most frequent response. The mean is 6.88 hours and the median is 7. The middle 50% of values lie between 6 and 8, with a full range of 2 to 12. Reports of 2 and 12 hours are unusual compared with the main cluster. They were flagged and retained, as discussed in Section 10.
 
 ### Drinking days per year
 
@@ -235,7 +235,7 @@ Drinking days per year is strongly right-skewed, with many observations near 0 a
 
 ### Unusual values
 
-I flagged unusual values and left the original measurements unchanged. A later review will document the coding checks for Age, Poverty, and zero diastolic readings. Extreme values alone were not sufficient grounds for removing observations.
+I flagged unusual values and left the original measurements unchanged. Section 10 documents the coding checks for Age, Poverty, and zero diastolic readings. Extreme values alone were not sufficient grounds for removing observations.
 
 
 ## 5. Distributions of Categorical Predictors
@@ -359,7 +359,7 @@ The largest group consists of participants who have smoked fewer than 100 lifeti
 
 ### Decisions from the categorical distributions
 
-I retained the categorical predictors for examination against Pulse. Several categories are relatively small, particularly Separated, Poor general health, the lowest income groups, and zero television hours. After examining their relationships with Pulse, I retained these categories, subject to separate coding review. Unequal category sizes alone do not establish whether a predictor is useful.
+I retained the categorical predictors for examination against Pulse. Several categories are relatively small, particularly Separated, Poor general health, the lowest income groups, and zero television hours. After examining their relationships with Pulse, I retained these categories, as documented in Section 10. Unequal category sizes alone do not establish whether a predictor is useful.
 
 ## 6. Relationships Between Numerical Predictors and Pulse
 
@@ -408,7 +408,7 @@ gf_point(Pulse ~ BPDiaAve, data = nhanes, alpha = 0.5)
 cor(nhanes$Pulse, nhanes$BPDiaAve, use = "complete.obs")
 ```
 
-There is a weak positive relationship between diastolic blood pressure and Pulse (r = 0.13), with considerable scatter. Higher diastolic readings tend to accompany slightly higher pulse rates. The five zero readings are separated from the main cluster. Their coding was investigated and the supplied averages were retained, subject to separate coding review.
+There is a weak positive relationship between diastolic blood pressure and Pulse (r = 0.13), with considerable scatter. Higher diastolic readings tend to accompany slightly higher pulse rates. The five zero readings are separated from the main cluster. Their coding was investigated and the supplied averages were retained, as documented in Section 10.
 
 ### Testosterone and Pulse
 
@@ -426,7 +426,7 @@ gf_point(Pulse ~ DirectChol, data = nhanes, alpha = 0.5)
 cor(nhanes$Pulse, nhanes$DirectChol, use = "complete.obs")
 ```
 
-There is almost no overall linear relationship between HDL cholesterol and Pulse (r = -0.02). The scatterplot has no clear upward or downward trend. A few high HDL readings are isolated from the main cluster and were retained for further coding review. HDL cholesterol appears less promising as an individual predictor.
+There is almost no overall linear relationship between HDL cholesterol and Pulse (r = -0.02). The scatterplot has no clear upward or downward trend. A few high HDL readings are isolated from the main cluster and were retained under the decision documented in Section 10. HDL cholesterol appears less promising as an individual predictor.
 
 ### Total cholesterol and Pulse
 
@@ -435,7 +435,7 @@ gf_point(Pulse ~ TotChol, data = nhanes, alpha = 0.5)
 cor(nhanes$Pulse, nhanes$TotChol, use = "complete.obs")
 ```
 
-There is almost no overall linear relationship between total cholesterol and Pulse (r = 0.03). Pulse varies substantially across cholesterol readings, without a clear trend. The highest cholesterol readings are isolated and were retained for further coding review. Total cholesterol appears less promising when considered alone.
+There is almost no overall linear relationship between total cholesterol and Pulse (r = 0.03). Pulse varies substantially across cholesterol readings, without a clear trend. The highest cholesterol readings are isolated and were retained under the decision documented in Section 10. Total cholesterol appears less promising when considered alone.
 
 ### Days of poor physical health and Pulse
 
@@ -618,7 +618,7 @@ None of the numerical predictors shows a strong individual linear relationship w
 
 Among the categorical predictors, Gender, Education, MaritalStatus, and computer or gaming hours show differences in group centers worth further examination. Television hours, smoking status, and household income also show some differences, although their distributions overlap substantially.
 
-These comparisons provide an initial guide rather than a final selection. A predictor with a weak individual relationship may still contribute when considered with other variables. These comparisons motivate a later review of relationships among predictors and the EDA shortlist.
+These comparisons provide an initial guide rather than a final selection. A predictor with a weak individual relationship may still contribute when considered with other variables. Sections 9 and 10 document the predictor relationships and data checks used to develop the shortlist in Section 11.
 
 
 ## 9. Relationships Between Predictors
@@ -638,7 +638,7 @@ Age and systolic blood pressure have a moderate positive relationship (r = 0.42)
 
 The relationship between Age and diastolic blood pressure appears curved, with readings generally rising into middle adulthood and then declining at older ages. Its near-zero linear correlation therefore does not fully describe the pattern. BMI has relatively weak linear relationships with Age and the two blood pressure measures.
 
-These relationships suggest that age and blood pressure should be considered together. The five zero diastolic readings were investigated and retained, subject to separate coding review.
+These relationships suggest that age and blood pressure should be considered together. The five zero diastolic readings were investigated and retained, as documented in Section 10.
 
 ### Household income and Poverty
 
@@ -753,3 +753,284 @@ Many participants report zero days for one or both measures. The two variables c
 Age is related to several other predictors, particularly MaritalStatus, Work, Education, computer or gaming hours, and Diabetes. Their individual relationships with Pulse may therefore differ from their relationships after accounting for Age.
 
 HHIncome and Poverty show substantial overlap, while Gender and Testosterone also share considerable information. These combinations deserve attention when choosing an effective set of predictors. Moderate associations, such as those between the blood pressure measures or between BMI and HDL cholesterol, do not by themselves justify removing a variable.
+
+## 10. Decisions About Unusual Values and Recoding
+
+### Age and Poverty
+
+The [NHANES demographic documentation](https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/demo_g.htm) explains the reporting rules.
+
+The concentrations at Age = 80 and Poverty = 5 reflect NHANES reporting rules. Age = 80 represents participants aged 80 or older, while Poverty = 5 represents ratios of 5 or higher. I retained these values. Numerical summaries describe the recorded values, which do not distinguish ages above 80 or poverty ratios above 5.
+
+### Zero diastolic blood pressure readings
+
+I examined the original readings associated with the five zero averages.
+
+```{r}
+subset(nhanes, BPDiaAve == 0,
+       select = c(ID, BPDiaAve, BPDia1, BPDia2, BPDia3))
+```
+
+All five observations have zeros in the second and third recorded diastolic readings. [NHANES blood-pressure documentation](https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/BPX_G.htm) permits zero diastolic readings, so zero alone does not establish a data-entry error. I retained the supplied averages. If these observations substantially influence the fitted model, their effect should be examined during model evaluation.
+
+### Other unusual values
+
+I retained the unusual values identified in Pulse, BMI, blood pressure, Testosterone, cholesterol, and sleep duration. The available information does not establish that these observations are errors. Values were not removed simply because they were far from the main cluster.
+
+Similarly, reports of 30 days of poor physical or mental health fall within the question's reporting period. High AlcoholYear values also fall within the possible number of days in a year.
+
+### Categorical variables
+
+SmokeStatus combines Smoke100 and SmokeNow, as described earlier. I retained the original categories of the other categorical predictors. Small categories were not combined without a substantive reason.
+
+I recorded the categorical predictors as factors:
+
+```{r}
+nhanes[categorical] <- lapply(nhanes[categorical], as.factor)
+```
+
+### Missing observations
+
+There are 47 observations without a recorded Pulse. These observations cannot contribute to fitting a model with Pulse as the response.
+
+During EDA, I used the available observations for each individual comparison rather than removing every participant with any missing candidate predictor. Missing predictor values still need consistent handling during model building and prediction.
+
+## 11. Variable Definitions
+
+### Response and numerical predictors
+
+| Variable | Definition and units |
+|---|---|
+| Pulse | Recorded pulse rate in beats per minute. |
+| Age | Age at screening in years; 80 represents 80 or older. |
+| Poverty | Family income divided by the applicable poverty guideline; smaller values indicate greater poverty, and 5 represents 5 or higher. |
+| BMI | Body mass index: weight in kilograms divided by squared height in meters. |
+| BPSysAve | Combined systolic blood pressure reading, in mm Hg. |
+| BPDiaAve | Combined diastolic blood pressure reading, in mm Hg. |
+| Testosterone | Total testosterone, in ng/dL. |
+| DirectChol | HDL cholesterol, in mmol/L. |
+| TotChol | Total cholesterol, in mmol/L. |
+| DaysPhysHlthBad | Number of days physical health was not good during the past 30 days. |
+| DaysMentHlthBad | Number of days mental health was not good during the past 30 days. |
+| SleepHrsNight | Usual hours of sleep per night on weekdays or workdays. |
+| AlcoholYear | Estimated number of days alcohol was consumed during the past year. |
+
+### Categorical predictors
+
+| Variable | Definition and categories |
+|---|---|
+| Gender | Participant's recorded sex: female or male. |
+| Race1 | Reported race/ethnicity: Black, Hispanic, Mexican, Other, or White. |
+| Education | Educational attainment: 8thGrade, 9_11thGrade, HighSchool, SomeCollege, or CollegeGrad. |
+| MaritalStatus | Married, Widowed, Divorced, Separated, NeverMarried, or LivePartner. LivePartner means living with a partner. |
+| HHIncome | Annual gross household income: $0–4,999; $5,000–9,999; $10,000–14,999; $15,000–19,999; $20,000–24,999; $25,000–34,999; $35,000–44,999; $45,000–54,999; $55,000–64,999; $65,000–74,999; $75,000–99,999; or $100,000 or more. |
+| Work | Work status during the previous week: Working, Looking, or NotWorking. |
+| Diabetes | Whether a doctor or health professional told the participant they had diabetes: Yes or No. |
+| HealthGen | Self-rated general health: Excellent, Vgood, Good, Fair, or Poor. |
+| SleepTrouble | Whether the participant told a health professional they had trouble sleeping: Yes or No. |
+| PhysActive | Participation in moderate or vigorous recreational physical activity: Yes or No. |
+| TVHrsDay | Average daily television viewing during the past 30 days: 0 hours, more than 0 but less than 1 hour, 1, 2, 3, 4, or more than 4 hours. |
+| CompHrsDay | Average daily computer or gaming use during the past 30 days, using the same hour categories as TVHrsDay. |
+| Alcohol12PlusYr | Whether the participant consumed at least 12 alcoholic drinks in any one year: Yes or No. |
+| SmokeStatus | Under100: fewer than 100 lifetime cigarettes; Current: at least 100 lifetime cigarettes and currently smoking; Former: at least 100 lifetime cigarettes and not currently smoking. |
+
+```{r}
+promising <- c(
+  "Age", "Gender", "BMI", "BPSysAve", "BPDiaAve", "Poverty",
+  "Testosterone", "DaysMentHlthBad", "Education", "MaritalStatus",
+  "CompHrsDay", "TVHrsDay", "SmokeStatus"
+)
+```
+
+### Lower-priority predictors and alternatives
+
+Race1, Work, Diabetes, HealthGen, SleepTrouble, PhysActive, Alcohol12PlusYr, SleepHrsNight, DaysPhysHlthBad, DirectChol, and TotChol showed relatively little separation or weak marginal relationships with Pulse. They are lower-priority candidates rather than variables proven to be unhelpful.
+
+HHIncome remains an alternative to Poverty. The two describe overlapping economic information, and household income requires more parameters when represented by its original categories.
+
+AlcoholYear is lower priority because its individual relationship with Pulse is weak and 19.1% of its values are missing.
+
+PhysActiveDays and AlcoholDay were excluded from the initial shortlist because of their substantial missingness. Smoke100 and SmokeNow were replaced by SmokeStatus.
+
+### Observations available for the shortlist
+
+```{r}
+sum(complete.cases(nhanes[c("Pulse", promising)]))
+```
+
+There are 1,439 observations with recorded values for Pulse and all 13 shortlisted predictors. This documents the sample available for a complete-case analysis; it does not remove observations or determine the final missing-data strategy.
+
+### Transition to model building
+
+The modeling stage should evaluate these predictors jointly, paying attention to the overlap between Age and several categorical predictors, Gender and Testosterone, and the two blood pressure measures.
+
+Possible curvature in the BMI–Pulse relationship and group differences involving Gender and Testosterone are worth evaluating if supported by the model diagnostics. Any recoding used during model development must also be applied consistently to prediction data.
+
+The EDA shortlist is based on missingness, variability, observed relationships with Pulse, and relationships between predictors. Final inclusion should depend on the variables' joint contribution and predictive performance.
+
+## References
+
+- NHANES 2009–2012 course codebook supplied with the project.
+- NHANES 2011–2012 Demographic Variables and Sample Weights (CSV)
+
+## Appendix: EDA Methods and Decisions
+
+### A1. Goal of the analysis
+
+My goal was to find variables that could help predict a person's Pulse.
+I looked at demographic, health, body measurement, and lifestyle
+variables in the NHANES training data.
+
+The dataset had `r nrow(nhanes)` observations and
+`r ncol(nhanes)` variables. Pulse was my response variable, measured in
+beats per minute. There were `r sum(is.na(nhanes$Pulse))` missing Pulse
+values.
+
+I used summary statistics, frequency tables, histograms, bar graphs,
+scatterplots, and boxplots. The code and graphs in the previous sections
+show the work behind my decisions.
+
+### A2. Missing values and variation
+
+First, I checked how many values were missing for each variable.
+I also checked whether the values varied enough to be useful.
+
+I removed PhysActiveDays and AlcoholDay from my first list of possible
+predictors because 52.7% and 33.3% of their values were missing.
+Using these variables could leave me with fewer observations for
+building the model.
+
+I kept PhysActive as another measure of physical activity.
+I also looked at Alcohol12PlusYr and AlcoholYear as other measures
+of alcohol use. AlcoholYear was a lower priority because 19.1% of its
+values were missing and its relationship with Pulse was weak.
+
+Some categories had fewer people than others. For example, relatively
+few participants were separated, reported poor general health, or were
+in the lowest income groups. I kept these categories because a small
+group size alone was not enough reason to remove or combine them.
+However, comparisons involving these groups may be less reliable.
+
+### A3. Definitions and recoding
+
+The tables above explain each variable, its units, and its categories.
+I recorded categorical variables as factors so R would treat their
+values as groups.
+
+I combined Smoke100 and SmokeNow into one variable called SmokeStatus.
+
+| Category | Meaning |
+|---|---|
+| Under100 | The person smoked fewer than 100 cigarettes in their lifetime. |
+| Current | The person smoked at least 100 lifetime cigarettes and currently smokes. |
+| Former | The person smoked at least 100 lifetime cigarettes but no longer smokes. |
+
+This helped me keep smoking information in one variable.
+SmokeStatus had no missing values in the training data.
+I kept the original categories for the other categorical variables.
+
+### A4. Distributions and unusual values
+
+I looked at the shape, center, spread, and unusual values of each
+numerical variable.
+
+Pulse had one main peak and was slightly right-skewed.
+The mean was 72.62 beats per minute, and the median was 72.
+The middle 50% of values were between 64 and 80.
+The lowest value was 40, and the highest was 136.
+
+BMI, systolic blood pressure, cholesterol, and drinking days per year
+had right-skewed distributions. Most people reported zero days of poor
+physical or mental health, while some reported 30 days.
+Most sleep values were between six and eight hours.
+
+I found some unusually high values in Pulse, BMI, blood pressure,
+Testosterone, and cholesterol. I kept these values because being
+unusual did not mean they were recorded incorrectly.
+Their effect on the model should be checked during model building.
+
+Age values of 80 represented people aged 80 or older.
+Poverty values of 5 represented ratios of 5 or higher.
+I kept these values because they followed the reporting rules.
+
+I also checked the original blood pressure readings for the five
+observations with an average diastolic reading of zero.
+After checking the coding information, I kept the supplied averages.
+
+### A5. Relationships with Pulse
+
+None of the numerical predictors had a strong straight-line
+relationship with Pulse.
+
+Age had the clearest relationship, with a correlation of about -0.19.
+Older participants generally had lower pulse rates, but there was still
+a lot of variation at each age.
+
+Poverty and Testosterone had weak negative relationships with Pulse.
+BMI, diastolic blood pressure, and days of poor mental health had weak
+positive relationships. The BMI graph also suggested that its
+relationship with Pulse might be curved.
+
+For categorical variables, I compared pulse distributions using
+boxplots and group summaries. Gender, Education, MaritalStatus, and
+computer-use groups showed some differences in average Pulse.
+Television viewing and smoking status also showed smaller differences.
+
+These comparisons looked at one predictor at a time.
+The relationships may change when several predictors are included
+in the same model. They also do not show that one variable causes
+changes in Pulse.
+
+### A6. Relationships between predictors
+
+I also compared predictors with each other.
+
+Age differed across education, marital-status, work-status, diabetes,
+and computer-use groups. This means some differences in Pulse between
+these groups could partly be related to age.
+
+HHIncome and Poverty gave me similar information about economic
+conditions. I chose Poverty for the shortlist because it was a simpler
+numerical measure. HHIncome could still be considered as an alternative.
+
+Testosterone values were very different between the Gender groups.
+Because of this, I should study Testosterone together with Gender
+when building the model.
+
+The two blood pressure measures had a moderate positive relationship.
+BMI and HDL cholesterol had a moderate negative relationship.
+These patterns showed that I needed to consider how predictors work
+together before choosing the final model.
+
+### A7. Promising predictors
+
+Based on the EDA, I chose the following variables for further study.
+
+| Predictor | Why I kept it for model building |
+|---|---|
+| Age | Had the clearest individual relationship with Pulse. |
+| Gender | The groups had different average pulse rates. |
+| BMI | Had a weak positive relationship and a possible curved pattern. |
+| BPSysAve | Could be useful when considered with Age and BPDiaAve. |
+| BPDiaAve | Had a weak positive relationship with Pulse. |
+| Poverty | Had a weak negative relationship with Pulse. |
+| Testosterone | Had a weak relationship with Pulse and differed greatly by Gender. |
+| DaysMentHlthBad | Had a weak positive relationship with Pulse. |
+| Education | Some groups had different average pulse rates. |
+| MaritalStatus | Group averages differed, but age differences also needed attention. |
+| CompHrsDay | Higher-use groups generally had higher average pulse rates. |
+| TVHrsDay | Some viewing groups had different average pulse rates. |
+| SmokeStatus | Group averages differed slightly, and the combined variable had no missing values. |
+
+There were
+`r sum(complete.cases(nhanes[c("Pulse", promising)]))`
+observations with no missing values for Pulse and all 13 shortlisted
+predictors.
+
+This shortlist can guide subsequent joint regression modeling; it is not a final model.
+Variables with weak individual relationships may still help when
+included with other predictors.
+
+The next step is to evaluate the predictors together, check whether
+transformations or interactions help, and examine the model's residual
+plots and prediction results.
