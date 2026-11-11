@@ -6,7 +6,7 @@ Statistical analysis of NHANES health data using R, including data screening, fe
 
 **Research question:** Which demographic, health, and lifestyle variables are associated with resting pulse rate among U.S. adults, and how well can multiple linear regression predict pulse?
 
-This project uses the 2011–2012 NHANES training dataset to investigate resting pulse rate (beats per minute). The analysis includes data inspection, missing-value assessment, exploratory visualization, and feature engineering.
+This project uses the 2011–2012 NHANES training dataset to investigate resting pulse rate (beats per minute). The analysis includes data inspection, missing-value assessment, exploratory visualization, and feature engineering. Multiple regression models examine associations with Pulse using screened variables.
 
 The analysis is organized in **one R Markdown notebook**. Findings describe associations, not cause-and-effect relationships.
 
@@ -56,7 +56,7 @@ The command renders the analysis as HTML. **No absolute file paths are required.
 
 ## 4. Dataset
 
-The supplied `NHANES-training.csv` contains **1,807 observations and 66 columns**, drawn from a course-provided 2011–2012 National Health and Nutrition Examination Survey (NHANES) training sample. The outcome is **`Pulse` (beats per minute)**. There are 47 missing Pulse values.
+The supplied `NHANES-training.csv` contains **1,807 observations and 66 columns**, drawn from a course-provided 2011–2012 National Health and Nutrition Examination Survey (NHANES) training sample. The outcome is **`Pulse` (beats per minute)**. There are 47 missing Pulse values; model-specific complete cases depend on the selected predictors.
 
 The repository includes the **full training CSV**, not a fabricated or simulated replacement. This is a course-provided subset, so confirm that course rules permit publishing the specific file. Do not treat the unweighted results as population-representative estimates.
 
@@ -83,25 +83,20 @@ Unusual observations were inspected rather than automatically removed. The EDA f
 
 ## 6. Regression modeling
 
-Variable screening and exploratory comparisons provide the basis for regression modeling. Model estimates are not included in this version.
+The `NHANES_Pulse_Analysis.Rmd` notebook develops and diagnoses two additive models:
+
+1. **Initial multiple regression** containing the most promising EDA candidates and contextual variables.
+2. **Reduced additive model** using Age, BMI, diastolic blood pressure, testosterone, and days of poor mental health.
+
+Model summaries and standard residual-diagnostic plots are included in the notebook and the HTML report.
 
 ## 7. Results and interpretation
 
-The Pulse distribution is centered at approximately **72 bpm** (mean **72.62 bpm**) and ranges from **40 to 136 bpm**.
-
-Age has a weak negative marginal association with Pulse; most numerical relationships examined are weak.
-
-Group summaries and boxplots show some differences in Pulse across demographic and lifestyle categories; these are unadjusted comparisons.
-
-Comparisons among predictors show overlap involving Age, blood pressure, income, and gender-linked testosterone measurements.
-
-The EDA shortlist includes 13 predictors; **1,439** observations have recorded values for Pulse and all shortlisted predictors. Outlying recorded values were retained after checking their meaning and plausibility.
-
-These are descriptive associations, not causal effects or individual predictions.
+The initial and reduced additive regression models have been estimated. Their coefficient summaries and diagnostic plots are available in the notebook and corresponding HTML report. A final interaction specification and out-of-sample comparison are not reported in this version.
 
 ## 8. Skills and tools demonstrated
 
-**R · R Markdown · Data cleaning · Missing-data profiling · Exploratory data analysis · Feature engineering · Statistical visualization · Correlation analysis · Technical reporting**
+**R · R Markdown · Exploratory data analysis · Multiple linear regression · Model diagnostics · Statistical visualization · Technical reporting**
 
 ## 9. Data references
 
