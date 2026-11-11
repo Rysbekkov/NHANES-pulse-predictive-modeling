@@ -618,7 +618,7 @@ None of the numerical predictors shows a strong individual linear relationship w
 
 Among the categorical predictors, Gender, Education, MaritalStatus, and computer or gaming hours show differences in group centers worth further examination. Television hours, smoking status, and household income also show some differences, although their distributions overlap substantially.
 
-These comparisons provide an initial guide rather than a final selection. A predictor with a weak individual relationship may still contribute when considered with other variables. Sections 9 and 10 document the predictor relationships and data checks used to develop the shortlist in Section 11.
+These comparisons provide an initial guide rather than a final selection. A predictor with a weak individual relationship may still contribute when considered with other variables. Sections 9 and 10 document the predictor relationships and data checks used to develop the shortlist in Section 12.
 
 
 ## 9. Relationships Between Predictors
@@ -867,6 +867,62 @@ The modeling stage should evaluate these predictors jointly, paying attention to
 Possible curvature in the BMI–Pulse relationship and group differences involving Gender and Testosterone are worth evaluating if supported by the model diagnostics. Any recoding used during model development must also be applied consistently to prediction data.
 
 The EDA shortlist is based on missingness, variability, observed relationships with Pulse, and relationships between predictors. Final inclusion should depend on the variables' joint contribution and predictive performance.
+
+## 12. Regression Model Development
+
+### Modeling data preparation
+```{r}
+# Reuse the training dataset loaded in Section 1.
+# Variables considered during model development.
+nhanes_mod <- nhanes |>
+  dplyr::select(
+    Pulse, Gender, Age, Race1, MaritalStatus, HHIncome, Poverty, Work,
+    BMI, BPSysAve, BPDiaAve, PhysActiveDays, AlcoholDay, SleepHrsNight,
+    Diabetes, HealthGen, Testosterone, DaysMentHlthBad, Education,
+    CompHrsDay, TVHrsDay
+  )
+
+nrow(nhanes_mod)
+```
+
+### Initial multiple regression
+
+The starting model incorporates the stronger candidates from the EDA, plus several contextual variables. It uses complete cases for the terms in its formula.
+
+```{r}
+initial_model <- lm(
+  Pulse ~ Age + Gender + BMI + BPSysAve + BPDiaAve + Testosterone +
+    Poverty + DaysMentHlthBad + Education + MaritalStatus + CompHrsDay + TVHrsDay,
+  data = nhanes_mod
+)
+summary(initial_model)
+```
+
+#### Initial model diagnostics
+
+```{r, fig.width=8, fig.height=7}
+par(mfrow = c(2, 2))
+plot(initial_model)
+par(mfrow = c(1, 1))
+```
+
+### Reduced additive model
+
+Following coefficient inspection and model diagnostics, evaluate a simpler specification with five continuous predictors.
+
+```{r}
+reduced_model <- lm(
+  Pulse ~ Age + BMI + BPDiaAve + Testosterone + DaysMentHlthBad,
+  data = nhanes_mod
+)
+summary(reduced_model)
+```
+
+```{r, fig.width=8, fig.height=7}
+par(mfrow = c(2, 2))
+plot(reduced_model)
+par(mfrow = c(1, 1))
+```
 
 ## References
 
