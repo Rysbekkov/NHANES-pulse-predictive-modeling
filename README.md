@@ -83,20 +83,63 @@ Unusual observations were inspected rather than automatically removed. The EDA f
 
 ## 6. Regression modeling
 
-The `NHANES_Pulse_Analysis.Rmd` notebook develops and diagnoses two additive models:
+The same `NHANES_Pulse_Analysis.Rmd` notebook develops and diagnoses four models:
 
 1. **Initial multiple regression** containing the most promising EDA candidates and contextual variables.
 2. **Reduced additive model** using Age, BMI, diastolic blood pressure, testosterone, and days of poor mental health.
+3. **Exploratory high-order interaction model** to study possible interaction effects; not chosen because of its complexity and limited interpretability.
+4. **Final interaction model**, adding Gender and a **Testosterone × Gender** interaction to permit different testosterone slopes across groups.
 
-Model summaries and standard residual-diagnostic plots are included in the notebook and the HTML report.
+The selected regression formula is:
+
+```r
+Pulse ~ Age + BMI + BPDiaAve + Testosterone * Gender + DaysMentHlthBad
+```
+
+Model summaries, coefficient confidence intervals, and standard residual-diagnostic plots are included in the notebook.
 
 ## 7. Results and interpretation
 
-The initial and reduced additive regression models have been estimated. Their coefficient summaries and diagnostic plots are available in the notebook and corresponding HTML report. A final interaction specification and out-of-sample comparison are not reported in this version.
+### Overall model performance
+
+| Metric | Reported result |
+| --- | ---: |
+| Final model sample size | **1,523** |
+| R² | **0.0975** |
+| Adjusted R² | **0.0933** |
+| Residual standard error | **10.95 bpm** |
+
+The fitted interaction model explains about **9.7% of observed variation in Pulse**. Predictive validation is not included in this version.
+
+### Final regression estimates
+
+| Predictor | Coefficient | 95% confidence interval | p-value |
+| --- | ---: | ---: | ---: |
+| Age (years) | −0.1088 | (−0.1416, −0.0760) | <0.001 |
+| BMI (kg/m²) | +0.1056 | (+0.0178, +0.1933) | 0.018 |
+| Diastolic blood pressure (mmHg) | +0.1354 | (+0.0881, +0.1828) | <0.001 |
+| Days of poor mental health | +0.1382 | (+0.0661, +0.2102) | <0.001 |
+| Testosterone (ng/dL; reference gender) | +0.0952 | (+0.0550, +0.1354) | <0.001 |
+| Male indicator | +3.2376 | (+0.9295, +5.5457) | 0.006 |
+| Testosterone × male | −0.1033 | (−0.1438, −0.0629) | <0.001 |
+
+The intercept is approximately **63.60 bpm**, but its literal interpretation is not meaningful because it assumes impossible or unrealistic zeros for several predictors. Because the model has an interaction, **the testosterone coefficient is the fitted slope among women (reference group)**, while the estimated slope among men is approximately `0.0952 − 0.1033 = −0.0081` bpm per ng/dL. The male indicator alone compares groups at testosterone equal to zero and should not be treated as a typical gender difference.
+
+### Findings in context
+
+- **Age:** Holding other modeled variables constant, an additional 10 years is associated with approximately **1.1 bpm lower** predicted Pulse.
+- **Diastolic blood pressure:** An additional 10 mmHg is associated with approximately **1.4 bpm higher** predicted Pulse.
+- **BMI:** An additional 5 kg/m² corresponds to approximately **0.5 bpm higher** predicted Pulse.
+- **Days of poor mental health:** Ten additional reported days in the preceding month correspond to approximately **1.4 bpm higher** predicted Pulse.
+- **Testosterone × gender:** The fitted testosterone–Pulse association differs in direction between the two reference groups, supporting the decision to test an interaction. Because the typical testosterone ranges differ widely by group, slopes should be interpreted within observed ranges, not extrapolated.
+
+### Limits and responsible interpretation
+
+This is an observational analysis; estimated effects are **associations rather than causal relationships**. Complete-case analysis excludes records with missing predictors. Survey weights and design-based variance methods were not applied. The model explains relatively little individual variation and **must not be used for clinical or individual health decisions**.
 
 ## 8. Skills and tools demonstrated
 
-**R · R Markdown · Exploratory data analysis · Multiple linear regression · Model diagnostics · Statistical visualization · Technical reporting**
+**R · R Markdown · Exploratory data analysis · Multiple linear regression · Interaction effects · Model diagnostics · Confidence intervals · Technical reporting**
 
 ## 9. Data references
 
