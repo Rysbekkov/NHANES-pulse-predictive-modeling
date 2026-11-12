@@ -924,6 +924,49 @@ plot(reduced_model)
 par(mfrow = c(1, 1))
 ```
 
+### Exploratory high-order interactions
+
+An all-interactions specification was examined during development. This includes many high-order terms, making it hard to interpret and prone to overfitting; **it was not selected as the final model**.
+
+```{r}
+all_interactions_model <- lm(
+  Pulse ~ Age * BMI * BPDiaAve * Testosterone * DaysMentHlthBad,
+  data = nhanes_mod
+)
+summary(all_interactions_model)
+```
+
+### Final model: Testosterone × Gender interaction
+
+The EDA revealed substantial gender differences in testosterone levels. The selected model allows the relationship between testosterone and pulse to differ by gender.
+
+```{r}
+final_model <- lm(
+  Pulse ~ Age + BMI + BPDiaAve + Testosterone * Gender + DaysMentHlthBad,
+  data = nhanes_mod
+)
+summary(final_model)
+confint(final_model)
+```
+
+#### Final model statistics
+
+```{r}
+final_summary <- summary(final_model)
+cat("N =", nobs(final_model), "\n")
+cat("R-squared =", round(final_summary$r.squared, 4), "\n")
+cat("Adjusted R-squared =", round(final_summary$adj.r.squared, 4), "\n")
+cat("Residual standard error =", round(final_summary$sigma, 2), "bpm\n")
+```
+
+#### Final model diagnostics
+
+```{r, fig.width=8, fig.height=7}
+par(mfrow = c(2, 2))
+plot(final_model)
+par(mfrow = c(1, 1))
+```
+
 ## References
 
 - NHANES 2009–2012 course codebook supplied with the project.
