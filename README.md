@@ -6,22 +6,23 @@ Statistical analysis of NHANES health data using R, including data screening, fe
 
 **Research question:** Which demographic, health, and lifestyle variables are associated with resting pulse rate among U.S. adults, and how well can multiple linear regression predict pulse?
 
-This project uses the 2011–2012 NHANES training dataset to investigate resting pulse rate (beats per minute). The analysis includes data inspection, missing-value assessment, exploratory visualization, and feature engineering. Multiple regression models examine associations with Pulse using screened variables.
+This project uses the 2011–2012 NHANES training dataset to investigate resting pulse rate (beats per minute). The analysis starts with data inspection, missing-value assessment, exploratory visualization, and feature engineering. It then develops and evaluates multiple linear regression models, including an interaction between testosterone and gender, to identify meaningful associations and assess predictive performance.
 
-The analysis is organized in **one R Markdown notebook**. Findings describe associations, not cause-and-effect relationships.
+EDA and regression modeling are combined into **one R Markdown notebook**, with results and limitations summarized here. Findings describe associations, not cause-and-effect relationships.
 
 ## 1. Project structure
 
 ```text
 nhanes-pulse-prediction/
+├── README.md
+├── NHANES_Pulse_Analysis.Rmd      # Combined EDA + model-building notebook
 ├── data/
-│   └── NHANES-training.csv
-├── figures/
-├── NHANES_Pulse_Analysis.Rmd
-└── README.md
+│   └── NHANES-training.csv       # Original training dataset (1,807 rows; 66 columns)
+├── scripts/
+    └── cross_validation.R       # Reproducible 10-fold model vs. baseline comparison
 ```
 
-The notebook contains the analysis and figures documented in this README.
+The notebook combines the original EDA and modeling work; the README summarizes the final results.
 
 ## 2. Prerequisites
 
@@ -50,13 +51,17 @@ Run the following commands **from the repository root**:
 
 ```bash
 Rscript -e 'rmarkdown::render("NHANES_Pulse_Analysis.Rmd")'
+Rscript scripts/cross_validation.R
 ```
 
-The command renders the analysis as HTML. **No absolute file paths are required.**
+The first command renders the analysis as HTML; the second runs the model-versus-baseline validation. **No absolute file paths are required.**
+
+
+*Reproducibility note:* The reorganized R notebook has not been executed end-to-end in the packaging environment because R is not installed. The final regression coefficients and model fit statistics were independently checked against the supplied CSV. Package availability and rendering should be verified locally after cloning.
 
 ## 4. Dataset
 
-The supplied `NHANES-training.csv` contains **1,807 observations and 66 columns**, drawn from a course-provided 2011–2012 National Health and Nutrition Examination Survey (NHANES) training sample. The outcome is **`Pulse` (beats per minute)**. There are 47 missing Pulse values; model-specific complete cases depend on the selected predictors.
+The supplied `NHANES-training.csv` contains **1,807 observations and 66 columns**, drawn from a course-provided 2011–2012 National Health and Nutrition Examination Survey (NHANES) training sample. The outcome is **`Pulse` (beats per minute)**. There are 47 missing Pulse values; the final multiple regression uses **1,523 complete cases** across the selected predictors.
 
 The repository includes the **full training CSV**, not a fabricated or simulated replacement. This is a course-provided subset, so confirm that course rules permit publishing the specific file. Do not treat the unweighted results as population-representative estimates.
 
@@ -66,20 +71,13 @@ The exploratory stage investigates numerical and categorical distributions, miss
 
 | EDA finding | Observation |
 | --- | --- |
+| Pulse distribution | Mean **72.62 bpm**, median **72 bpm**; range **40–136 bpm** |
+| Strongest numerical marginal correlation among those examined | Age vs. Pulse: **r ≈ −0.189** (weak negative) |
 | High missingness | `PhysActiveDays`: **52.7%**; `AlcoholDay`: **33.3%** |
 | Derived variable | `SmokeStatus` constructed from `Smoke100` and `SmokeNow` |
-| Pulse distribution | Mean **72.62 bpm**, median **72 bpm**; range **40–136 bpm** |
-| Categorical distributions | Gender, race, education, health, and lifestyle categories examined with frequency tables and bar charts |
-| Numerical relationship | Age vs. Pulse: **r ≈ −0.189** (weak negative) |
-| Group comparisons | Pulse compared across demographic, health, and lifestyle categories |
-| Predictor overlap | Age and systolic blood pressure (**r ≈ 0.42**); gender and testosterone distributions differ substantially |
-| Complete-case EDA shortlist | **1,439** observations with Pulse and all 13 shortlisted predictors recorded |
+| Important predictor overlap | Age and systolic blood pressure (**r ≈ 0.42**); gender and testosterone show markedly different distributions |
 
-The age and blood-pressure comparisons are also shown in `figures/figure_1.png`.
-
-The gender–testosterone distributions and within-group trends are also shown in `figures/figure_2.png`.
-
-Unusual observations were inspected rather than automatically removed. The EDA findings guided selection of 13 candidate predictors for modeling.
+Unusual observations were inspected rather than automatically removed. The EDA findings guided model selection.
 
 ## 6. Regression modeling
 
@@ -90,13 +88,13 @@ The same `NHANES_Pulse_Analysis.Rmd` notebook develops and diagnoses four models
 3. **Exploratory high-order interaction model** to study possible interaction effects; not chosen because of its complexity and limited interpretability.
 4. **Final interaction model**, adding Gender and a **Testosterone × Gender** interaction to permit different testosterone slopes across groups.
 
-The selected regression formula is:
+The selected final regression formula is:
 
 ```r
 Pulse ~ Age + BMI + BPDiaAve + Testosterone * Gender + DaysMentHlthBad
 ```
 
-Model summaries, coefficient confidence intervals, and standard residual-diagnostic plots are included in the notebook.
+The full code provides model summaries, coefficient confidence intervals, and standard residual-diagnostic plots.
 
 ## 7. Results and interpretation
 
@@ -108,8 +106,11 @@ Model summaries, coefficient confidence intervals, and standard residual-diagnos
 | R² | **0.0975** |
 | Adjusted R² | **0.0933** |
 | Residual standard error | **10.95 bpm** |
+| Cross-validated model MSE | **120.8 bpm²** |
+| Cross-validated baseline MSE | **132.3 bpm²** |
+| Relative MSE reduction vs. baseline | **~8.7%** |
 
-The fitted interaction model explains about **9.7% of observed variation in Pulse**. Predictive validation is not included in this version.
+The multiple regression explains about **9.7% of observed variation in Pulse**. The reported cross-validated prediction error improves on a simple mean-only baseline, but substantial individual variation remains unexplained. The cross-validation results come from the original report; rerunning with different folds may change them slightly.
 
 ### Final regression estimates
 
@@ -139,7 +140,7 @@ This is an observational analysis; estimated effects are **associations rather t
 
 ## 8. Skills and tools demonstrated
 
-**R · R Markdown · Exploratory data analysis · Multiple linear regression · Interaction effects · Model diagnostics · Confidence intervals · Technical reporting**
+**R · R Markdown · Data cleaning · Missing-data profiling · Exploratory data analysis · Feature engineering · Statistical visualization · Correlation analysis · Multiple linear regression · Model diagnostics · Interaction effects · Confidence intervals · Cross-validation · Technical reporting**
 
 ## 9. Data references
 
