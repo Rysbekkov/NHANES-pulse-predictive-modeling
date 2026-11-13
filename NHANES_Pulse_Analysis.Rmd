@@ -22,8 +22,8 @@ knitr::opts_chunk$set(
 ```
 
 The goal of this project is to predict an individual's Pulse using the NHANES
-training data. This notebook documents the analysis of demographic, health, and lifestyle
-variables associated with resting pulse rate.
+training data. This notebook documents the complete workflow: exploratory data analysis,
+feature screening, regression model development, diagnostics, and interpretation.
 
 ## 1. Load the training data
 
@@ -967,6 +967,33 @@ plot(final_model)
 par(mfrow = c(1, 1))
 ```
 
+### Predictive performance
+
+The submitted results reported a cross-validated mean squared prediction error of about **120.8**, compared with **132.3** for the intercept-only baseline. Those original fold assignments are not preserved in the uploaded notebooks. An independent, reproducible 10-fold comparison is available in `scripts/cross_validation.R`; its exact values may differ with random folds.
+
+### Limitations
+
+The final model explains less than 10% of the variation in measured pulse. The associations should not be interpreted as causal or used for medical decision-making. The sample is a course training split, and survey design weighting is not modeled here.
+
+
+## 13. Reporting the Final Model
+
+The table below is generated directly from the fitted final model. Estimates represent associations while holding the other terms in the model constant. The `Testosterone:Gender` coefficient is an interaction, so the meaning of the testosterone and gender main effects depends on the reference group and the value of the interacting variable.
+
+```{r}
+final_coef <- as.data.frame(summary(final_model)$coefficients)
+final_coef$Predictor <- rownames(final_coef)
+final_ci <- confint(final_model)
+final_coef$CI_lower <- final_ci[, 1]
+final_coef$CI_upper <- final_ci[, 2]
+final_coef <- final_coef[, c("Predictor", "Estimate", "Std. Error", "Pr(>|t|)", "CI_lower", "CI_upper")]
+knitr::kable(final_coef, digits = 4, caption = "Final regression estimates and 95% confidence intervals")
+```
+
+**Main results:** Age has a negative estimated association with Pulse, while BMI, diastolic blood pressure and days of poor mental health have positive estimated associations. Testosterone's estimated relationship differs by gender in the fitted model. With about 9.7% of Pulse variation explained, the model provides limited predictive accuracy and should not be used for clinical decisions. These results describe associations, not causal effects.
+
+**Predictive performance:** The submitted results reported 10-fold cross-validated mean squared prediction error of 120.8 bpm² for the final model versus 132.3 bpm² for a mean-only baseline. The original cross-validation fold assignments were not supplied, so `scripts/cross_validation.R` performs a separate seeded 10-fold evaluation that may give slightly different results.
+
 ## References
 
 - NHANES 2009–2012 course codebook supplied with the project.
@@ -1126,7 +1153,7 @@ There were
 observations with no missing values for Pulse and all 13 shortlisted
 predictors.
 
-This shortlist can guide subsequent joint regression modeling; it is not a final model.
+This shortlist informed the regression models in Section 12; it is not the final model.
 Variables with weak individual relationships may still help when
 included with other predictors.
 
