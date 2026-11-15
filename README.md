@@ -1,6 +1,6 @@
 # NHANES Pulse Predictive Modeling
 
-Statistical analysis of NHANES health data using R, including data screening, feature engineering, descriptive statistics, and exploratory visualizations. Regression modeling and evaluation are planned for later stages.
+Statistical analysis of NHANES health data using R, including data screening, feature engineering, descriptive statistics, regression modeling evaluation and exploratory visualizations.
 
 ## Project overview
 
